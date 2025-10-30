@@ -1,1 +1,2 @@
-#Laboratoare
+## Damian Alexandru
+### Laboratoare si teme rezolvate
