@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <plant id="1">
+  <name>Arabica</name>
+  <origin>Ethiopia</origin>
+ </plant>
+ <plant id="2">
+  <name>Robusta</name>
+  <origin>Vietnam</origin>
+ </plant>
+ <plant id="3">
+  <name>Liberica</name>
+  <origin>Philippines</origin>
+ </plant>

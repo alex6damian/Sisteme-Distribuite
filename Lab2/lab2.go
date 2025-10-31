@@ -29,9 +29,11 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"regexp"
 )
@@ -106,6 +108,38 @@ func validatePhoneNumber(phone string) bool {
 }
 
 // III.1
+type Person struct {
+	Name  string `json:"name"`
+	Age   int    `json:"age"`
+	Email string `json:"email"`
+}
+
+func jsonEncodeDecode() {
+	// Encoding
+	person := Person{Name: "Ion Popescu", Age: 30, Email: "ion.popescu@example.com"}
+	person2 := Person{Name: "Maria Ionescu", Age: 25, Email: "maria.ionescu@example.com"}
+	people := []Person{person, person2}
+	res, _ := json.Marshal(people)
+	fmt.Println(string(res))
+
+	// Decoding
+	var decodedRes []map[string]interface{} // folosesc map pentru a putea decoda structuri multiple (specific: var DecodedRes []Person)
+	if err := json.Unmarshal(res, &decodedRes); err != nil {
+		panic(err)
+	}
+	fmt.Println(decodedRes)
+}
+
+// IV.1
+func httpClientExample() {
+	resp, err := http.Get("https://www.google.com")
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	fmt.Println("Response status:", resp.Status)
+}
 
 func main() {
 	path := "lab2.go"
@@ -132,4 +166,8 @@ func main() {
 			fmt.Printf("Numarul %s nu este valid.\n", numar)
 		}
 	}
+
+	jsonEncodeDecode()
+	httpClientExample()
+
 }
