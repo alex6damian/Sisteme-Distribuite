@@ -1,0 +1,8 @@
+{
+  "Host": "localhost",
+  "Port": "8080",
+  "WelcomeMessage": "Connection successful!",
+  "MaxMessageSize": 1024,
+  "MaxConcurrentConnections": 20,
+  "ConnectionIdleTimeoutSeconds": 60
+}
