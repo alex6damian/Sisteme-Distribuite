@@ -6,9 +6,13 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math"
 	"net"
 	"os"
+	"strconv"
+	"strings"
 	"time"
+	"unicode"
 )
 
 // request and response structures
@@ -65,7 +69,7 @@ func sendErrorResponse(conn net.Conn, errorMsg string, timeout time.Duration) {
 func handleConnection(connection net.Conn, config Config, semaphore chan struct{}) {
 	defer func() {
 		connection.Close()
-		<-semaphore
+		<-semaphore // releasing the semaphore slot
 		log.Printf("Connection closed: %s\n\n", connection.RemoteAddr().String())
 	}()
 	log.Printf("New connection from %s\n", connection.RemoteAddr().String())
@@ -104,16 +108,22 @@ func handleConnection(connection net.Conn, config Config, semaphore chan struct{
 
 		log.Printf("Processing request #%d with input: %s", req.TaskNumber, string(req.Input))
 
-		// TODO: implementing the tasks
+		// handling the task
+		results, err := handleTask(req.TaskNumber, req.Input)
+		if err != nil {
+			log.Printf("Error handling task: %v", err)
+			sendErrorResponse(connection, "Internal server error", timeoutDuration)
+			continue
+		}
 
-		responseText := "Task is not developed yet."
-
+		// sending the response
 		response := GenericResponse{
 			Status: "success",
-			Result: json.RawMessage(fmt.Sprintf(`"%s"`, responseText)),
+			Result: results,
 		}
 		responseJson, _ := json.Marshal(response)
 
+		// setting write deadline and sending response
 		connection.SetWriteDeadline(time.Now().Add(timeoutDuration))
 		_, err = connection.Write(append(responseJson, '\n'))
 		if err != nil {
@@ -158,4 +168,68 @@ func main() {
 		// handling the connection in a new goroutine
 		go handleConnection(connection, config, semaphore)
 	}
+}
+
+func handleTask(taskNumber int, input json.RawMessage) (json.RawMessage, error) {
+	var inputs []string
+	var results interface{}
+	if err := json.Unmarshal(input, &inputs); err != nil {
+		return nil, fmt.Errorf("invalid input format for task 1")
+	}
+	switch taskNumber {
+	case 1:
+		results = task1(inputs)
+		break
+	case 2:
+		results = task2(inputs)
+		break
+	default:
+		return nil, fmt.Errorf("unknown task number: %d", taskNumber)
+	}
+	resultsJson, err := json.Marshal(results)
+	if err != nil {
+		return nil, fmt.Errorf("error encoding results to JSON")
+	}
+	return json.RawMessage(resultsJson), nil
+}
+
+func task1(input []string) []string {
+	// casa, masa, trei, tanc, 4321 -> cmtt4, aara3, ssen2, aaic1
+	words_len := len([]rune(input[0]))
+	results := make([]string, 0, words_len)
+	for i := 0; i < words_len; i++ {
+		var sb strings.Builder
+		for _, word := range input {
+			r := []rune(word)
+			sb.WriteRune(r[i])
+		}
+		results = append(results, sb.String())
+
+	}
+	return results
+}
+
+func task2(input []string) int {
+	// abd4g5, 1sdf6fd, fd2fdsf5 -> 2 patrate perfecte (16, 25)
+	count := 0
+	// extracting the digits
+	for _, word := range input {
+		var sb strings.Builder
+		for _, ch := range word {
+			if unicode.IsDigit(ch) {
+				sb.WriteRune(ch)
+			}
+		}
+		if sb.Len() > 0 {
+			// convert to integer and check perfect square
+			num, err := strconv.Atoi(sb.String())
+			if err == nil {
+				sqrt := math.Sqrt(float64(num))
+				if sqrt == math.Trunc(sqrt) {
+					count++
+				}
+			}
+		}
+	}
+	return count
 }
