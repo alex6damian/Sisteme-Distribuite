@@ -198,6 +198,12 @@ func handleTask(taskNumber int, input json.RawMessage) (json.RawMessage, error) 
 			return nil, fmt.Errorf("invalid input format for task 4")
 		}
 		results = task4(inputs)
+	case 5:
+		var inputs []string
+		if err := json.Unmarshal(input, &inputs); err != nil {
+			return nil, fmt.Errorf("invalid input format for task 5")
+		}
+		results = task5(inputs)
 	default:
 		return nil, fmt.Errorf("unknown task number: %d", taskNumber)
 	}
@@ -289,4 +295,23 @@ func task4(input []int) int {
 		average /= count
 	}
 	return average
+}
+
+func task5(input []string) []int {
+	// 2dasdas, 12, dasdas, 1010, 101 => 10, 5 (1010=10, 101=5)
+	results := make([]int, 0)
+	for _, word := range input {
+		num, err := strconv.ParseInt(word, 2, 64)
+		// if err == nil {
+		// 	conversion, err := strconv.ParseInt(num, 2, 64)
+		// 	if err == nil {
+		// 		results = append(results, int(conversion))
+		// 	}
+		// }
+		if err == nil {
+			results = append(results, int(num))
+		}
+
+	}
+	return results
 }
