@@ -9,6 +9,7 @@ import (
 	"math"
 	"net"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -210,6 +211,12 @@ func handleTask(taskNumber int, input json.RawMessage) (json.RawMessage, error) 
 			return nil, fmt.Errorf("invalid input format for task 6")
 		}
 		results = task6(inputs)
+	case 7:
+		var inputStr string
+		if err := json.Unmarshal(input, &inputStr); err != nil {
+			return nil, fmt.Errorf("invalid input format for task 7")
+		}
+		results = task7(inputStr)
 	default:
 		return nil, fmt.Errorf("unknown task number: %d", taskNumber)
 	}
@@ -343,4 +350,19 @@ func task6(input []string) []string {
 		results = append(results, sb.String())
 	}
 	return results
+}
+
+func task7(input string) string {
+	// using regex to extract the number and the letter
+	// pattern used: first group, digits, second group, single letter
+	re := regexp.MustCompile(`(\d+)(\p{L})`)
+	var sb strings.Builder
+	matches := re.FindAllStringSubmatch(input, -1)
+	for _, match := range matches {
+		// match example : ["1G","1","G"] first is full match, second is first group, third is second group
+		count, _ := strconv.Atoi(match[1]) // number of repetitions
+		letter := match[2]                 // the letter to repeat
+		sb.WriteString(strings.Repeat(letter, count))
+	}
+	return sb.String()
 }
