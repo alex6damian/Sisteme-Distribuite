@@ -96,22 +96,23 @@ func main() {
 		log.Fatalf("Error parsing: %v", err)
 	}
 
-	// getting the request for task 1
-	var requestForTask1 GenericRequest
+	// getting the request for task requestedTaskNumber
+	var requestForTask GenericRequest
+	requestedTaskNumber := 7
 	found := false
 	for _, req := range allRequests {
-		if req.TaskNumber == 1 {
-			requestForTask1 = req
+		if req.TaskNumber == requestedTaskNumber {
+			requestForTask = req
 			found = true
 			break
 		}
 	}
 
 	if !found {
-		log.Fatal("Could not find request with 'task_number: 1' in JSON file.")
+		log.Fatalf("Could not find request with 'task_number: %d' in JSON file.", requestedTaskNumber)
 	}
 
-	fmt.Printf("Task %d found with input: %s\n", requestForTask1.TaskNumber, string(requestForTask1.Input))
+	fmt.Printf("Task %d found with input: %s\n", requestForTask.TaskNumber, string(requestForTask.Input))
 
 	// launching multiple clients concurrently
 	var wg sync.WaitGroup // waitgroup to wait for all clients to finish
@@ -120,7 +121,7 @@ func main() {
 	for i := 1; i <= NUM_CLIENTS; i++ {
 		wg.Add(1)
 		// launching each client in a separate goroutine
-		go runSingleClient(i, &wg, requestForTask1)
+		go runSingleClient(i, &wg, requestForTask)
 		time.Sleep(150 * time.Millisecond) // break to see clearer logs
 	}
 

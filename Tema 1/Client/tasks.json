@@ -13,10 +13,18 @@
   },
   {
     "task": 4,
-    "input": [2, 10, 11, 39, 32, 80, 84]
+    "input": [2, 10, 5, 11, 39, 32, 80, 84]
   },
   {
     "task": 5,
     "input": ["2dasdas", "12", "dasdas", "1010", "101"]
+  },
+  {
+    "task": 6,
+    "input": ["LEFT", "5", "abcdef", "salut", "ceva"]
+  },
+  {
+    "task": 7,
+    "input": "1G11o1L"
   }
 ]
