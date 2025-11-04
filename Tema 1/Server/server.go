@@ -204,6 +204,12 @@ func handleTask(taskNumber int, input json.RawMessage) (json.RawMessage, error) 
 			return nil, fmt.Errorf("invalid input format for task 5")
 		}
 		results = task5(inputs)
+	case 6:
+		var inputs []string
+		if err := json.Unmarshal(input, &inputs); err != nil {
+			return nil, fmt.Errorf("invalid input format for task 6")
+		}
+		results = task6(inputs)
 	default:
 		return nil, fmt.Errorf("unknown task number: %d", taskNumber)
 	}
@@ -219,6 +225,7 @@ func task1(input []string) []string {
 	words := input
 	words_len := len([]rune(words[0]))
 	results := make([]string, 0, words_len)
+	// selecting characters by index from each word
 	for i := 0; i < words_len; i++ {
 		var sb strings.Builder
 		for _, word := range words {
@@ -278,6 +285,7 @@ func task4(input []int) int {
 	count := 0
 	min_bound := input[0]
 	max_bound := input[1]
+	// calculating average of numbers whose sum of digits is within bounds
 	for i := 3; i < len(input); i++ {
 		sum := 0
 		s := strconv.Itoa(input[i])
@@ -301,17 +309,38 @@ func task5(input []string) []int {
 	// 2dasdas, 12, dasdas, 1010, 101 => 10, 5 (1010=10, 101=5)
 	results := make([]int, 0)
 	for _, word := range input {
+		// checking if the word is a binary number
 		num, err := strconv.ParseInt(word, 2, 64)
-		// if err == nil {
-		// 	conversion, err := strconv.ParseInt(num, 2, 64)
-		// 	if err == nil {
-		// 		results = append(results, int(conversion))
-		// 	}
-		// }
 		if err == nil {
 			results = append(results, int(num))
 		}
 
+	}
+	return results
+}
+
+// for uppercase, check if upper, convert to lower, do the same and convert back
+func task6(input []string) []string {
+	// LEFT, 3, abcdef, salut, ceva => xyzabc, pxirq, zbsx
+	// extracting direction and number of steps
+	direction := input[0]
+	steps, _ := strconv.Atoi(input[1])
+	results := make([]string, 0)
+	for i := 2; i < len(input); i++ {
+		var sb strings.Builder
+		// building the shifted string
+		for _, ch := range input[i] {
+			var shifted rune
+			base := int(ch)
+			switch direction {
+			case "LEFT":
+				shifted = rune((base-97-steps+26)%26 + 97)
+			case "RIGHT":
+				shifted = rune((base-97+steps)%26 + 97)
+			}
+			sb.WriteRune(shifted)
+		}
+		results = append(results, sb.String())
 	}
 	return results
 }
