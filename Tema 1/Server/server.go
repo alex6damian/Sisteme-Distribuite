@@ -179,10 +179,10 @@ func handleTask(taskNumber int, input json.RawMessage) (json.RawMessage, error) 
 	switch taskNumber {
 	case 1:
 		results = task1(inputs)
-		break
 	case 2:
 		results = task2(inputs)
-		break
+	case 3:
+		results = task3(inputs)
 	default:
 		return nil, fmt.Errorf("unknown task number: %d", taskNumber)
 	}
@@ -232,4 +232,20 @@ func task2(input []string) int {
 		}
 	}
 	return count
+}
+
+func task3(input []string) int {
+	// 12, 13, 14 => 21 + 31 + 41 = 93
+	sum := 0
+	// reversing and summing
+	for _, num := range input {
+		var sb strings.Builder
+		r := []rune(num)
+		for i := len(r) - 1; i >= 0; i-- {
+			sb.WriteRune(r[i])
+		}
+		num, _ := strconv.Atoi(sb.String())
+		sum += num
+	}
+	return sum
 }
