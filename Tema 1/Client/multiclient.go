@@ -12,7 +12,7 @@ import (
 )
 
 // Constanta pentru numărul de clienți concurenți
-const NUM_CLIENTS = 3
+const NUM_CLIENTS = 7
 
 // Structurile JSON, trebuie să se potrivească cu cele din server și din fișier
 type GenericRequest struct {
@@ -97,22 +97,29 @@ func main() {
 	}
 
 	// getting the request for task requestedTaskNumber
-	var requestForTask GenericRequest
-	requestedTaskNumber := 7
-	found := false
-	for _, req := range allRequests {
-		if req.TaskNumber == requestedTaskNumber {
-			requestForTask = req
-			found = true
-			break
+	var requestsForTask []GenericRequest
+	requestedTaskNumbers := []int{1, 2, 3, 4, 5, 6, 7} // specify the task numbers you want to run
+
+	// finding the requests for the specified task numbers
+	for _, requestedTaskNumber := range requestedTaskNumbers {
+		found := false
+		for _, req := range allRequests {
+			if req.TaskNumber == requestedTaskNumber {
+				requestsForTask = append(requestsForTask, req)
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			log.Fatalf("Could not find request with 'task_number: %d' in JSON file.", requestedTaskNumber)
 		}
 	}
 
-	if !found {
-		log.Fatalf("Could not find request with 'task_number: %d' in JSON file.", requestedTaskNumber)
+	// displaying the found requests
+	for _, req := range requestsForTask {
+		fmt.Printf("Task %d found with input: %s\n", req.TaskNumber, string(req.Input))
 	}
-
-	fmt.Printf("Task %d found with input: %s\n", requestForTask.TaskNumber, string(requestForTask.Input))
 
 	// launching multiple clients concurrently
 	var wg sync.WaitGroup // waitgroup to wait for all clients to finish
@@ -121,8 +128,8 @@ func main() {
 	for i := 1; i <= NUM_CLIENTS; i++ {
 		wg.Add(1)
 		// launching each client in a separate goroutine
-		go runSingleClient(i, &wg, requestForTask)
-		time.Sleep(150 * time.Millisecond) // break to see clearer logs
+		go runSingleClient(i, &wg, requestsForTask[i-1])
+		time.Sleep(50 * time.Millisecond) // break to see clearer logs
 	}
 
 	log.Println("Waiting for all clients to finish...")
