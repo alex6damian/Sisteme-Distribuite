@@ -1,8 +1,30 @@
-## Damian Alexandru
-### Laboratoare si teme rezolvate
+# Damian Alexandru  
+### Grupa 342  
 
-##### Complet: Laborator 2, 3
-##### In lucru: Laborator 4 (exercitiile 3-5)
+---
 
-##### 03.11 In lucru: Tema 1 (conexiunea clients-server rezolvata, de implementat task-urile)
-##### 04.11 DONE: task-urile 1-7
+## 🧪 Laboratoare și teme rezolvate  
+
+### ✅ Laboratoare finalizate  
+- **Laborator 2**  
+- **Laborator 3**
+
+### 🛠️ În lucru  
+- **Laborator 4** – exercițiile **3–5**
+
+---
+
+## 📚 Teme  
+
+### 🗓️ 03.11  
+- **În lucru:** Tema 1  
+  - Conexiunea **client–server** rezolvată  
+  - De implementat **task-urile**
+
+### 🗓️ 04.11  
+- **Finalizat:** Tema 1  
+  - Task-urile **1–7** ✅
+
+---
+
+📅 *Ultima actualizare:* 04.11.2025 
