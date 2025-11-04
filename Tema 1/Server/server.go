@@ -171,18 +171,33 @@ func main() {
 }
 
 func handleTask(taskNumber int, input json.RawMessage) (json.RawMessage, error) {
-	var inputs []string
+
 	var results interface{}
-	if err := json.Unmarshal(input, &inputs); err != nil {
-		return nil, fmt.Errorf("invalid input format for task 1")
-	}
 	switch taskNumber {
 	case 1:
+		var inputs []string
+		if err := json.Unmarshal(input, &inputs); err != nil {
+			return nil, fmt.Errorf("invalid input format for task 1")
+		}
 		results = task1(inputs)
 	case 2:
+		var inputs []string
+		if err := json.Unmarshal(input, &inputs); err != nil {
+			return nil, fmt.Errorf("invalid input format for task 2")
+		}
 		results = task2(inputs)
 	case 3:
+		var inputs []int
+		if err := json.Unmarshal(input, &inputs); err != nil {
+			return nil, fmt.Errorf("invalid input format for task 3")
+		}
 		results = task3(inputs)
+	case 4:
+		var inputs []int
+		if err := json.Unmarshal(input, &inputs); err != nil {
+			return nil, fmt.Errorf("invalid input format for task 4")
+		}
+		results = task4(inputs)
 	default:
 		return nil, fmt.Errorf("unknown task number: %d", taskNumber)
 	}
@@ -195,11 +210,12 @@ func handleTask(taskNumber int, input json.RawMessage) (json.RawMessage, error) 
 
 func task1(input []string) []string {
 	// casa, masa, trei, tanc, 4321 -> cmtt4, aara3, ssen2, aaic1
-	words_len := len([]rune(input[0]))
+	words := input
+	words_len := len([]rune(words[0]))
 	results := make([]string, 0, words_len)
 	for i := 0; i < words_len; i++ {
 		var sb strings.Builder
-		for _, word := range input {
+		for _, word := range words {
 			r := []rune(word)
 			sb.WriteRune(r[i])
 		}
@@ -234,13 +250,14 @@ func task2(input []string) int {
 	return count
 }
 
-func task3(input []string) int {
+func task3(input []int) int {
 	// 12, 13, 14 => 21 + 31 + 41 = 93
 	sum := 0
 	// reversing and summing
 	for _, num := range input {
+		s := strconv.Itoa(num)
 		var sb strings.Builder
-		r := []rune(num)
+		r := []rune(s)
 		for i := len(r) - 1; i >= 0; i-- {
 			sb.WriteRune(r[i])
 		}
@@ -248,4 +265,28 @@ func task3(input []string) int {
 		sum += num
 	}
 	return sum
+}
+
+func task4(input []int) int {
+	average := 0
+	count := 0
+	min_bound := input[0]
+	max_bound := input[1]
+	for i := 3; i < len(input); i++ {
+		sum := 0
+		s := strconv.Itoa(input[i])
+		r := []rune(s)
+		for j := len(r) - 1; j >= 0; j-- {
+			digit, _ := strconv.Atoi(string(r[j]))
+			sum += digit
+		}
+		if sum >= min_bound && sum <= max_bound {
+			average += input[i]
+			count++
+		}
+	}
+	if count > 0 {
+		average /= count
+	}
+	return average
 }
