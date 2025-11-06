@@ -1,6 +1,6 @@
 # Damian Alexandru  
 ### Grupa 342  
-### 📝 Lab1 reprezinta cerintele de la laboratorul 2, Lab 2 reprezinta laboratorul 3 etc.
+#### 📝 Lab1 reprezinta cerintele de la laboratorul 2, Lab 2 reprezinta laboratorul 3 etc.
 ---
 
 ## 🧪 Laboratoare și teme rezolvate  
