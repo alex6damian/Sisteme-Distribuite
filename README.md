@@ -9,9 +9,10 @@
 - **Laborator 2**  
 - **Laborator 3**
 - **Laborator 4**
+- **Laborator 5**
 
 ### 🛠️ În lucru  
-- **Laborator 5**
+- **Laborator 6**
 
 ---
 
