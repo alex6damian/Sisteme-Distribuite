@@ -26,7 +26,8 @@
 ### 🗓️ 04.11  
 - **Finalizat:** Tema 1  
   - Task-urile **1–7** ✅
-  - Clienti diferiti cer taskuri diferite
+  - Clienti diferiti cer taskuri diferite 
+
 ---
 
 📅 *Ultima actualizare:* 05.11.2025 
