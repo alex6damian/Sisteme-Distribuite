@@ -3,16 +3,16 @@
 #### 📝 Lab1 reprezinta cerintele de la laboratorul 2, Lab 2 reprezinta laboratorul 3 etc.
 ---
 
-## 🧪 Laboratoare și teme rezolvate  
+## 🧪 Laboratoare si teme rezolvate  
 
 ### ✅ Laboratoare finalizate  
 - **Laborator 2**  
 - **Laborator 3**
 - **Laborator 4**
 - **Laborator 5**
-
-### 🛠️ În lucru  
 - **Laborator 6**
+
+### 🛠️ In lucru  
 
 ---
 
@@ -30,4 +30,4 @@
 
 ---
 
-📅 *Ultima actualizare:* 05.11.2025 
+📅 *Ultima actualizare:* 11.11.2025 
