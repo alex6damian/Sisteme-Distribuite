@@ -75,6 +75,7 @@ func handleConnection(connection net.Conn, config Config, semaphore chan struct{
 	}()
 	log.Printf("New connection from %s\n", connection.RemoteAddr().String())
 
+	// setting timeout duration
 	timeoutDuration := time.Duration(config.ConnectionIdleTimeoutSeconds) * time.Second
 
 	// sending the welcome message
@@ -87,9 +88,12 @@ func handleConnection(connection net.Conn, config Config, semaphore chan struct{
 
 	reader := bufio.NewReader(connection)
 
+	// main loop to handle multiple requests per connection
 	for {
+		// setting read deadline
 		connection.SetReadDeadline(time.Now().Add(timeoutDuration))
 
+		// reading the request
 		requestJson, err := reader.ReadString('\n')
 		if err != nil {
 			if err != io.EOF {
@@ -100,6 +104,7 @@ func handleConnection(connection net.Conn, config Config, semaphore chan struct{
 
 		log.Printf("Received from %s: %s", connection.RemoteAddr().String(), requestJson)
 
+		// decoding the request
 		var req GenericRequest
 		if err := json.Unmarshal([]byte(requestJson), &req); err != nil {
 			log.Printf("Error decoding JSON: %v. Request: %s", err, requestJson)

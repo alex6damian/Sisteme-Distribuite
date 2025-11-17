@@ -11,10 +11,10 @@ import (
 	"time"
 )
 
-// Constanta pentru numărul de clienți concurenți
-const NUM_CLIENTS = 7
+// number of clients to run concurrently
+const NUM_CLIENTS = 10
 
-// Structurile JSON, trebuie să se potrivească cu cele din server și din fișier
+// JSON structures must match those in the server and in the file
 type GenericRequest struct {
 	TaskNumber int             `json:"task"`
 	Input      json.RawMessage `json:"input"`
@@ -98,7 +98,7 @@ func main() {
 
 	// getting the request for task requestedTaskNumber
 	var requestsForTask []GenericRequest
-	requestedTaskNumbers := []int{1, 2, 3, 4, 5, 6, 7} // specify the task numbers you want to run
+	requestedTaskNumbers := []int{1, 2, 3, 4, 5, 6, 7, 1, 2, 3} // specify the task numbers you want to run
 
 	// finding the requests for the specified task numbers
 	for _, requestedTaskNumber := range requestedTaskNumbers {
