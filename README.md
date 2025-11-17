@@ -30,4 +30,4 @@
 
 ---
 
-📅 *Ultima actualizare:* 11.11.2025 
+📅 *Ultima actualizare:* 17.11.2025 
