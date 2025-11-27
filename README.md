@@ -28,6 +28,15 @@
   - Task-urile **1–7** ✅
   - Clienti diferiti cer taskuri diferite 
 
+### 🗓️ 27.11
+- **Finalizat:** Tema 2  
+  - Task-urile **1-2** ✅
+  - Concept map-reduce aplicat pe array
+
+### 🗓️ 27.11
+- **În lucru:** Prezentare 2  
+  - Status: **to start**
+
 ---
 
-📅 *Ultima actualizare:* 17.11.2025 
+📅 *Ultima actualizare:* 27.11.2025 

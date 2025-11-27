@@ -12,7 +12,7 @@ import (
 )
 
 // number of clients to run concurrently
-const NUM_CLIENTS = 10
+const NUM_CLIENTS = 100
 
 // JSON structures must match those in the server and in the file
 type GenericRequest struct {
@@ -98,7 +98,10 @@ func main() {
 
 	// getting the request for task requestedTaskNumber
 	var requestsForTask []GenericRequest
-	requestedTaskNumbers := []int{1, 2, 3, 4, 5, 6, 7, 1, 2, 3} // specify the task numbers you want to run
+	requestedTaskNumbers := []int{} // specify the task numbers you want to run
+	for i := 1; i <= NUM_CLIENTS; i++ {
+		requestedTaskNumbers = append(requestedTaskNumbers, i%7+1)
+	}
 
 	// finding the requests for the specified task numbers
 	for _, requestedTaskNumber := range requestedTaskNumbers {

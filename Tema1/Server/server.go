@@ -178,6 +178,7 @@ func main() {
 
 func handleTask(taskNumber int, input json.RawMessage) (json.RawMessage, error) {
 
+	// calling the appropriate task function based on task number
 	var results interface{}
 	switch taskNumber {
 	case 1:
